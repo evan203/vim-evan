@@ -1,102 +1,56 @@
-" set nocompatible
-" filetype plugin indent on
-" set foldenable
-" set foldmethod=marker
-" au FileType sh let g:sh_fold_enabled=5
-" au FileType sh let g:is_bash=1
-" au FileType sh set foldmethod=syntax
+" disable vi compatibility (emulation of old bugs)
+set nocompatible 
 
+" Enable filetype plugins
+filetype plugin on
+filetype indent on
 
-set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
+" cursor on insert mode
+let &t_SI = "\e[6 q" "blinking bar for insert
+let &t_EI = "\e[2 q" "block for edit
 
-
-" Always show statusline
+" always show status bar
 set laststatus=2
 
-
-" VIM Configuration File
-" Description: Optimized for C/C++ development, but useful also for other things.
-" Author: Gerhard Gappmeier
-"
+" wildmenu is command completion 
+set wildmenu
+set wildmode=longest:full,full
 
 " set UTF-8 encoding
 set enc=utf-8
 set fenc=utf-8
 set termencoding=utf-8
-" disable vi compatibility (emulation of old bugs)
-set nocompatible
+
 " use indentation of previous line
 set autoindent
 " use intelligent indentation for C
 set smartindent
+
 " configure tabwidth and insert spaces instead of tabs
 set tabstop=4        " tab width is 4 spaces
 set shiftwidth=4     " indent also with 4 spaces
-set expandtab        " expand tabs to spaces
-" wrap lines at 120 chars. 80 is somewaht antiquated with nowadays displays.
+set noexpandtab      " dont expand tabs to spaces
+"set expandtab       " expand tabs to spaces
+set softtabstop=4    " 
+
+" wrap lines at 200 chars
 set textwidth=200
+
 " turn syntax highlighting on
 set t_Co=256
 syntax on
 colorscheme codedark
-" turn line numbers on
-set number
+set background=dark
+"hi Normal ctermbg=16 guibg=#101010 
+"hi LineNr ctermbg=16 guibg=#1a1a1a 
 " highlight matching braces
 set showmatch
-" intelligent comments
-set comments=sl:/*,mb:\ *,elx:\ */
 
-" Install OmniCppComplete like described on http://vim.wikia.com/wiki/C++_code_completion
-" This offers intelligent C++ completion when typing ‘.’ ‘->’ or <C-o>
-" Load standard tag files
-set tags+=~/.vim/tags/cpp
-set tags+=~/.vim/tags/gl
-set tags+=~/.vim/tags/sdl
-set tags+=~/.vim/tags/qt4
+" turn line numbers on
+set number
 
-" Install DoxygenToolkit from http://www.vim.org/scripts/script.php?script_id=987
-let g:DoxygenToolkit_authorName="John Doe <john@doe.com>"
+" Highlight search results
+set hlsearch
 
-" Enhanced keyboard mappings
-"
-" in normal mode F2 will save the file
-nmap <F2> :w<CR>
-" in insert mode F2 will exit insert, save, enters insert again
-imap <F2> <ESC>:w<CR>i
-" switch between header/source with F4
-map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
-" recreate tags file with F5
-map <F5> :!ctags -R –c++-kinds=+p –fields=+iaS –extra=+q .<CR>
-" create doxygen comment
-map <F6> :Dox<CR>
-" build using makeprg with <F7>
-map <F7> :make<CR>
-" build using makeprg with <S-F7>
-map <S-F7> :make clean all<CR>
-" goto definition with F12
-map <F12> <C-]>
-" in diff mode we use the spell check keys for merging
-if &diff
-  ” diff settings
-  map <M-Down> ]c
-  map <M-Up> [c
-  map <M-Left> do
-  map <M-Right> dp
-  map <F9> :new<CR>:read !svn diff<CR>:set syntax=diff buftype=nofile<CR>gg
-else
-  " spell settings
-"  :setlocal spell spelllang=en
-  " set the spellfile - folders must exist
-  set spellfile=~/.vim/spellfile.add
-  map <M-Down> ]s
-  map <M-Up> [s
-endif
-
-" left and right arrow keys change lines
-set whichwrap+=<,>,h,l,[,]
-
-" color scheme
-" set background=dark
-" colorscheme molokai
-
-autocmd vimenter * NERDTree
+" Makes search act like search in modern browsers
+set incsearch
